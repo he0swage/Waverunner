@@ -1,0 +1,59 @@
+[gd_scene load_steps=9 format=3 uid="uid://cxp75ehw662f7"]
+
+[ext_resource type="Script" uid="uid://b4xm8xuuep0cm" path="res://main.gd" id="1_wp4xf"]
+[ext_resource type="PackedScene" uid="uid://bmcr8673ejs45" path="res://scene/mob.tscn" id="2_wp4xf"]
+[ext_resource type="PackedScene" uid="uid://cdexlna52brae" path="res://scene/player.tscn" id="3_0ha60"]
+[ext_resource type="PackedScene" uid="uid://bivnak50ke1in" path="res://scene/hud.tscn" id="4_brvut"]
+[ext_resource type="Texture2D" uid="uid://6jf3k3pbpjfb" path="res://ChatGPT Image Aug 7, 2025, 01_52_53 AM.png" id="5_0ha60"]
+[ext_resource type="AudioStream" uid="uid://dvhbe08bdvxwu" path="res://art/gameover.wav" id="6_4j5ol"]
+[ext_resource type="AudioStream" uid="uid://dx41wjwhfao0d" path="res://art/06.-Adventure-Board-_DELTARUNE-Chapter-3-4-Soundtrack_-Toby-Fox.ogg" id="6_p1hux"]
+
+[sub_resource type="Curve2D" id="Curve2D_4j5ol"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 416, 0, 0, 0, 0, 0, 424, 752, 0, 0, 0, 0, 0, 752, 0, 0, 0, 0, 0, 0)
+}
+point_count = 5
+
+[node name="main" type="Node"]
+script = ExtResource("1_wp4xf")
+mob_scene = ExtResource("2_wp4xf")
+
+[node name="TextureRect" type="TextureRect" parent="."]
+texture_filter = 1
+offset_right = 420.0
+offset_bottom = 740.0
+texture = ExtResource("5_0ha60")
+expand_mode = 1
+
+[node name="player" parent="." instance=ExtResource("3_0ha60")]
+
+[node name="MobTimer" type="Timer" parent="."]
+wait_time = 0.5
+
+[node name="ScoreTimer" type="Timer" parent="."]
+
+[node name="StartTimer" type="Timer" parent="."]
+wait_time = 2.0
+one_shot = true
+
+[node name="StartPosition" type="Marker2D" parent="."]
+position = Vector2(240, 450)
+
+[node name="MobPath" type="Path2D" parent="."]
+curve = SubResource("Curve2D_4j5ol")
+
+[node name="MobSpawnLocation" type="PathFollow2D" parent="MobPath"]
+
+[node name="HUD" parent="." instance=ExtResource("4_brvut")]
+
+[node name="music" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("6_p1hux")
+
+[node name="gameover" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("6_4j5ol")
+
+[connection signal="hit" from="player" to="." method="game_over"]
+[connection signal="timeout" from="MobTimer" to="." method="_on_mob_timer_timeout"]
+[connection signal="timeout" from="ScoreTimer" to="." method="_on_score_timer_timeout"]
+[connection signal="timeout" from="StartTimer" to="." method="_on_start_timer_timeout"]
+[connection signal="start_game" from="HUD" to="." method="new_game"]

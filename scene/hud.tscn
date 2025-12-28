@@ -1,0 +1,68 @@
+[gd_scene load_steps=3 format=3 uid="uid://bivnak50ke1in"]
+
+[ext_resource type="Script" uid="uid://bh2hn02cw0of4" path="res://hud.gd" id="1_o8u2p"]
+[ext_resource type="FontFile" uid="uid://u7bos03m23nt" path="res://fonts/Pixeled.ttf" id="2_pvgpj"]
+
+[node name="HUD" type="CanvasLayer"]
+script = ExtResource("1_o8u2p")
+
+[node name="ScoreLabel" type="Label" parent="."]
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -25.0
+offset_top = 1.0
+offset_right = 35.0
+offset_bottom = 169.0
+grow_horizontal = 2
+theme_override_colors/font_color = Color(0.713726, 0, 0.698039, 1)
+theme_override_fonts/font = ExtResource("2_pvgpj")
+theme_override_font_sizes/font_size = 60
+text = "0"
+
+[node name="Message" type="Label" parent="."]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -189.0
+offset_top = -138.0
+offset_right = 195.0
+offset_bottom = 89.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0.749333, 0.68, 1, 1)
+theme_override_colors/font_shadow_color = Color(0.66806, 0.384129, 0.347279, 1)
+theme_override_colors/font_outline_color = Color(0.543523, 0.491338, 0.253692, 1)
+theme_override_constants/line_spacing = -20
+theme_override_fonts/font = ExtResource("2_pvgpj")
+theme_override_font_sizes/font_size = 40
+text = "DODGE THE ENEMIES!"
+horizontal_alignment = 1
+autowrap_mode = 2
+
+[node name="BestScoreLabel" type="Label" parent="."]
+offset_left = 7.0
+offset_top = 695.0
+offset_right = 167.0
+offset_bottom = 741.0
+theme_override_colors/font_color = Color(0.373766, 0.849419, 0.84385, 1)
+theme_override_fonts/font = ExtResource("2_pvgpj")
+text = "BEST SCORE:0"
+
+[node name="StartButton" type="Button" parent="."]
+offset_left = 115.0
+offset_top = 621.0
+offset_right = 305.0
+offset_bottom = 671.0
+theme_override_fonts/font = ExtResource("2_pvgpj")
+theme_override_font_sizes/font_size = 15
+text = "START"
+
+[node name="MessageTimer" type="Timer" parent="."]
+wait_time = 1.511
+one_shot = true
+
+[connection signal="pressed" from="StartButton" to="." method="_on_start_button_pressed"]
+[connection signal="timeout" from="MessageTimer" to="." method="_on_message_timer_timeout"]
